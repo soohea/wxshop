@@ -5,7 +5,6 @@ import com.soohea.wxshop.WxshopApplication;
 import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.generate.Goods;
 import com.soohea.wxshop.generate.Shop;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;

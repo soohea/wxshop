@@ -20,5 +20,8 @@ public interface ShoppingCartQueryMapper {
             @Param("shopId") long shopId
     );
 
+    void deleteShoppingCart(@Param("goodsId") long goodsId,
+                            @Param("userId") long userId);
+
 
 }

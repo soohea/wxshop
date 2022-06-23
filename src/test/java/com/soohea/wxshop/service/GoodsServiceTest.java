@@ -59,20 +59,16 @@ public class GoodsServiceTest {
     @Test
     public void createGoodsFailedIfUserIsNotOwner() {
         when(shop.getOwnerUserId()).thenReturn(2L);
-        HttpException thrownException = assertThrows(HttpException.class, () -> {
-            goodsService.createGoods(goods);
-        });
+        HttpException thrownException = assertThrows(HttpException.class, () -> goodsService.createGoods(goods));
         assertEquals(403, thrownException.getStatusCode());
     }
 
     @Test
     public void throwExceptionIfGoodsNotFound() {
         long goodsToBeDeleted = 123;
-        when(shop.getOwnerUserId()).thenReturn(1L);
+
         when(goodsMapper.selectByPrimaryKey(goodsToBeDeleted)).thenReturn(null);
-        HttpException thrownException = assertThrows(HttpException.class, () -> {
-            goodsService.deleteGoodsById(goodsToBeDeleted);
-        });
+        HttpException thrownException = assertThrows(HttpException.class, () -> goodsService.deleteGoodsById(goodsToBeDeleted));
         assertEquals(404, thrownException.getStatusCode());
 
     }
@@ -81,9 +77,8 @@ public class GoodsServiceTest {
     public void deleteGoodsThrowExceptionIfUserIsNotOwner() {
         long goodsToBeDeleted = 123;
         when(shop.getOwnerUserId()).thenReturn(2L);
-        HttpException thrownException = assertThrows(HttpException.class, () -> {
-            goodsService.deleteGoodsById(goodsToBeDeleted);
-        });
+        when(goodsMapper.selectByPrimaryKey(goodsToBeDeleted)).thenReturn(goods);
+        HttpException thrownException = assertThrows(HttpException.class, () -> goodsService.deleteGoodsById(goodsToBeDeleted));
         assertEquals(403, thrownException.getStatusCode());
     }
 

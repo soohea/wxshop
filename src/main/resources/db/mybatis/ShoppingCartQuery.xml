@@ -87,5 +87,11 @@
             <result property="status" column="GOODS_STATUS"/>
         </collection>
     </resultMap>
+    <delete id="deleteShoppingCart" parameterType="Map">
+        UPDATE SHOPPING_CART
+        SET STATUS = 'deleted', UPDATED_AT = now()
+        WHERE USER_ID = #{userId}
+          AND GOODS_ID = #{goodsId}
+    </delete>
 
 </mapper>

@@ -1,12 +1,8 @@
 package com.soohea.wxshop.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.soohea.wxshop.entity.PageResponse;
 import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.entity.ShoppingCartData;
-import com.soohea.wxshop.entity.ShoppingCartGoods;
-import com.soohea.wxshop.generate.Goods;
-import com.soohea.wxshop.generate.Shop;
 import com.soohea.wxshop.service.ShoppingCartService;
 import com.soohea.wxshop.service.UserContext;
 import org.slf4j.Logger;
@@ -89,8 +85,7 @@ public class ShoppingCartController {
      *     }
      */
     /**
-     *
-     * @param pageNum 页码
+     * @param pageNum  页码
      * @param pageSize 每页元素数量
      * @return 结果
      */
@@ -104,7 +99,6 @@ public class ShoppingCartController {
                 pageNum,
                 pageSize);
     }
-
 
 
     // @formatter:off
@@ -161,7 +155,7 @@ public class ShoppingCartController {
      *           ]
      *         }
      *       }
-     *     }
+     *
      *
      * @apiError 400 Bad Request 若用户的请求中包含错误
      * @apiError 401 Unauthorized 若用户未登录
@@ -174,11 +168,10 @@ public class ShoppingCartController {
      *     }
      */
     /**
-     *
      * @param request 加购物车请求
      * @return 添加后的结果
      */
-     //@formatter:on
+    //@formatter:on
     @PostMapping("/shoppingCart")
     public Response<ShoppingCartData> addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
         return Response.of(shoppingCartService.addToShoppingCart(request, UserContext.getCurrentUser().getId()));
@@ -262,7 +255,7 @@ public class ShoppingCartController {
      *           ]
      *         }
      *       }
-     *     }
+     *
      *
      * @apiError 401 Unauthorized 若用户未登录
      *
@@ -278,8 +271,11 @@ public class ShoppingCartController {
      * @param goodsId 要删除的商品id
      * @return 更新后的该店铺数据
      */
-//    @DeleteMapping("/shoppingCart/{id}")
-//    public Response<ShoppingCartData> deleteGoodsInShoppingCart(@PathVariable("id") Long goodsId) {
-//        return Response.of(shoppingCartService.deleteGoodsInShoppingCart(goodsId, UserContext.getCurrentUser().getId()));
-//    }
+    @DeleteMapping("/shoppingCart/{id}")
+    public Response<ShoppingCartData> deleteGoodsInShoppingCart(@PathVariable("id") Long goodsId) {
+
+        return Response.of(shoppingCartService.deleteGoodsInShoppingCart(goodsId, UserContext.getCurrentUser().getId()));
+
+    }
 }
+

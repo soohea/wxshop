@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Sets;
 import com.soohea.wxshop.WxshopApplication;
 import com.soohea.wxshop.controller.ShoppingCartController;
-import com.soohea.wxshop.entity.PageResponse;
-import com.soohea.wxshop.entity.Response;
-import com.soohea.wxshop.entity.ShoppingCartData;
-import com.soohea.wxshop.entity.ShoppingCartGoods;
+import com.soohea.wxshop.entity.*;
 import com.soohea.wxshop.generate.Goods;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,11 +67,29 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(1L, response.getData().getShop().getId());
         Assertions.assertEquals(Arrays.asList(1L, 2L),
                 response.getData().getGoods().stream().map(Goods::getId).collect(toList()));
-        Assertions.assertEquals(Sets.newHashSet(2,100),
+        Assertions.assertEquals(Sets.newHashSet(2, 100),
                 response.getData().getGoods().stream().map(ShoppingCartGoods::getNumber).collect(toSet()));
         Assertions.assertTrue(response.getData().getGoods().stream().allMatch(
                 goods -> goods.getShopId() == 1L
         ));
+    }
+
+    @Test
+    public void canDeleteShoppingCartData() throws IOException, URISyntaxException {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+        Response<ShoppingCartData> response = doHttpRequest("/api/v1/shoppingCart/5",
+                "DELETE", null, loginResponse.cookie).asJsonObject(new TypeReference<Response<ShoppingCartData>>() {
+        });
+
+        Assertions.assertEquals(2L, response.getData().getShop().getId());
+        Assertions.assertEquals(1, response.getData().getGoods().size());
+
+        ShoppingCartGoods goods = response.getData().getGoods().get(0);
+
+        Assertions.assertEquals(4L, goods.getId());
+        Assertions.assertEquals(200, goods.getNumber());
+        Assertions.assertEquals(DataStatus.OK.toString().toLowerCase(), goods.getStatus());
+
     }
 
 
