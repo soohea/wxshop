@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: wxshop-order
+  datasource:
+    url: jdbc:mysql://192.168.187.130:3306/wxshop?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
+    username: root
+    password: my-secret-pw
+    driverClassName: com.mysql.cj.jdbc.Driver
+server:
+  port: 8080
+
+mybatis:
+  config-location: classpath:db/mybatis/mybatis-config.xml
+
+wxshop:
+  redis:
+    host: 192.168.187.130
+    port: 6379
+  orderservice:
+    version: 0.0.1
+    url: ""
+dubbo:
+  config-center:
+    timeout: 10000
+  metadata-report:
+    timeout: 10000
+  registry:
+    address: zookeeper://192.168.187.130:2181
