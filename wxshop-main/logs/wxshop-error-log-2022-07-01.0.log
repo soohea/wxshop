@@ -5460,3 +5460,6 @@ Caused by: org.apache.shiro.UnavailableSecurityManagerException: No SecurityMana
 2022-07-01 16:44:32.138 [http-nio-auto-1-exec-5] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
 2022-07-01 16:45:13.473 [http-nio-auto-1-exec-5] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
 2022-07-01 16:50:59.722 [http-nio-auto-1-exec-5] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
+2022-07-01 21:05:02.240 [http-nio-auto-1-exec-6] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
+2022-07-01 22:27:01.809 [http-nio-auto-1-exec-6] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
+2022-07-01 22:29:48.184 [http-nio-auto-1-exec-6] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6

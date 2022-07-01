@@ -12,4 +12,8 @@ public class UserContext {
     public static User getCurrentUser() {
         return currentUser.get();
     }
+
+    public static void clearCurrentUser() {
+        currentUser.remove();
+    }
 }

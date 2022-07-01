@@ -1,7 +1,6 @@
 package com.soohea.wxshop.controller;
 
 import com.soohea.api.data.OrderInfo;
-import com.soohea.wxshop.entity.HttpException;
 import com.soohea.wxshop.entity.OrderResponse;
 import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.service.OrderService;
@@ -200,20 +199,16 @@ public class OrderController {
     // @formatter:on
 
     /**
-     *
      * @param orderInfo 信息
-     * @param response 响应
+     * @param response  响应
      * @return 结果
      */
     @PostMapping("/order")
     public Response<OrderResponse> createOrder(@RequestBody OrderInfo orderInfo, HttpServletResponse response) {
-        try {
-            orderService.deductStock(orderInfo);
-            return Response.of(orderService.createOrder(orderInfo, UserContext.getCurrentUser().getId()));
-        } catch (HttpException e) {
-            response.setStatus(e.getStatusCode());
-            return Response.of(e.getMessage(), null);
-        }
+
+        orderService.deductStock(orderInfo);
+        return Response.of(orderService.createOrder(orderInfo, UserContext.getCurrentUser().getId()));
+
     }
 
     // @formatter:off
