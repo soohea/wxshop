@@ -1,4 +1,4 @@
-package com.soohea.wxshop.entity;
+package com.soohea.api.exceptions;
 
 import org.springframework.http.HttpStatus;
 

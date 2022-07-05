@@ -150,6 +150,11 @@ public class AbstractIntegrationTest {
             this.cookies = cookies;
         }
 
+        HttpResponse assertOkStatusCode() {
+            Assertions.assertTrue(code >= 200 && code < 300);
+            return this;
+        }
+
         public <T> T asJsonObject(TypeReference<T> typeReference) throws JsonProcessingException {
             return objectMapper.readValue(body, typeReference);
 

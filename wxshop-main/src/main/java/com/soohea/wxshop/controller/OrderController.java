@@ -1,15 +1,16 @@
 package com.soohea.wxshop.controller;
 
+import com.soohea.api.DataStatus;
 import com.soohea.api.data.OrderInfo;
+import com.soohea.api.exceptions.HttpException;
+import com.soohea.api.generate.Order;
 import com.soohea.wxshop.entity.OrderResponse;
+import com.soohea.api.data.PageResponse;
 import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.service.OrderService;
 import com.soohea.wxshop.service.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -104,16 +105,15 @@ public class OrderController {
      * @param status
      * @return 结果
      */
-//    @GetMapping("/order")
-//    public PageResponse<OrderResponse> getOrder(@RequestParam("pageNum") Integer pageNum,
-//                                                @RequestParam("pageSize") Integer pageSize,
-//                                                @RequestParam(value = "status", required = false) String status) {
-//        if (status != null && DataStatus.fromStatus(status) == null) {
-//            throw HttpException.badRequest("非法status: " + status);
-//        }
-//
-//        return orderService.getOrder(UserContext.getCurrentUser().getId(), pageNum, pageSize, DataStatus.fromStatus(status));
-//    }
+    @GetMapping("/order")
+    public PageResponse<OrderResponse> getOrder(@RequestParam("pageNum") Integer pageNum,
+                                                @RequestParam("pageSize") Integer pageSize,
+                                                @RequestParam(value = "status", required = false) String status) {
+        if (status != null && DataStatus.fromStatus(status) == null) {
+            throw HttpException.badRequest("非法status: " + status);
+        }
+        return orderService.getOrder(UserContext.getCurrentUser().getId(), pageNum, pageSize, DataStatus.fromStatus(status));
+    }
 
     /**
      * 根据id获取订单
@@ -292,17 +292,17 @@ public class OrderController {
      * @param order
      * @return 更新后的订单
      */
-//    @RequestMapping(value = "/order/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
-//    public Response<OrderResponse> updateOrder(@PathVariable("id") long id, @RequestBody Order order) {
-//        order.setId(id);
-//        if (order.getExpressCompany() != null) {
-//            return Response.of(orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId()));
-//        } else {
-//            return Response.of(orderService.updateOrderStatus(order, UserContext.getCurrentUser().getId()));
-//        }
-//    }
+    @RequestMapping(value = "/order/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
+    public Response<OrderResponse> updateOrder(@PathVariable("id") long id, @RequestBody Order order) {
+        order.setId(id);
+        if (order.getExpressCompany() != null) {
+            return Response.of(orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId()));
+        } else {
+            return Response.of(orderService.updateOrderStatus(order, UserContext.getCurrentUser().getId()));
+        }
+    }
 
-    // @formatter:off
+//     @formatter:off
     /**
      * @api {DELETE} /order/:id 删除订单
      * @apiName DeleteOrder
@@ -368,8 +368,8 @@ public class OrderController {
      * @param orderId
      * @return 删除后的订单
      */
-//    @DeleteMapping("/order/{id}")
-//    public Response<OrderResponse> deleteOrder(@PathVariable("id") long orderId) {
-//        return Response.of(orderService.deleteOrder(orderId, UserContext.getCurrentUser().getId()));
-//    }
+    @DeleteMapping("/order/{id}")
+    public Response<OrderResponse> deleteOrder(@PathVariable("id") long orderId) {
+        return Response.of(orderService.deleteOrder(orderId, UserContext.getCurrentUser().getId()));
+    }
 }

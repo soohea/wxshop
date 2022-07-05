@@ -1,6 +1,6 @@
 package com.soohea.wxshop.controller;
 
-import com.soohea.wxshop.entity.PageResponse;
+import com.soohea.api.data.PageResponse;
 import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.generate.Shop;
 import com.soohea.wxshop.service.ShopService;

@@ -2,8 +2,8 @@ package com.soohea.wxshop.service;
 
 
 import com.soohea.api.DataStatus;
-import com.soohea.wxshop.entity.HttpException;
-import com.soohea.wxshop.entity.PageResponse;
+import com.soohea.api.exceptions.HttpException;
+import com.soohea.api.data.PageResponse;
 import com.soohea.wxshop.generate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
