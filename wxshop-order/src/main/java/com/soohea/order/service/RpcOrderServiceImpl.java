@@ -24,14 +24,18 @@ import static java.util.stream.Collectors.toList;
 
 @Service(version = "${wxshop.orderservice.version}")
 public class RpcOrderServiceImpl implements OrderRpcService {
-    @Autowired
     private OrderMapper orderMapper;
-
-    @Autowired
     private MyOrderMapper myOrderMapper;
+    private OrderGoodsMapper orderGoodsMapper;
 
     @Autowired
-    private OrderGoodsMapper orderGoodsMapper;
+    public RpcOrderServiceImpl(OrderMapper orderMapper,
+                               MyOrderMapper myOrderMapper,
+                               OrderGoodsMapper orderGoodsMapper) {
+        this.orderMapper = orderMapper;
+        this.myOrderMapper = myOrderMapper;
+        this.orderGoodsMapper = orderGoodsMapper;
+    }
 
     @Override
     public Order createOrder(OrderInfo orderInfo, Order order) {
@@ -156,8 +160,7 @@ public class RpcOrderServiceImpl implements OrderRpcService {
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
 
-        long id = orderMapper.insert(order);
-        order.setId(id);
+        orderMapper.insert(order);
     }
 
     private void verify(BooleanSupplier supplier, String message) {

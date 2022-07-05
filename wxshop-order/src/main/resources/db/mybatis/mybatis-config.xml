@@ -8,7 +8,9 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.soohea.api.data.OrderInfo" alias="OrderInfo"/>
+        <typeAlias type="com.soohea.api.data.GoodsInfo" alias="GoodsInfo"/>
         <typeAlias type="com.soohea.api.generate.Order" alias="Order"/>
+
     </typeAliases>
     <mappers>
         <mapper resource="db/mybatis/MyOrderMapper.xml"/>

@@ -1,1 +1,2 @@
 2022-07-05 10:35:13.499 [http-nio-auto-1-exec-5] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6
+2022-07-05 21:16:45.777 [http-nio-auto-1-exec-6] ERROR com.soohea.wxshop.service.OrderService - 扣减库存失败，商品id：5，数量6

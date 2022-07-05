@@ -65,6 +65,12 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>2.2.2</version>
             </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>8.5.11</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
