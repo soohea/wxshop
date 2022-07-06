@@ -86,6 +86,8 @@ public class AbstractIntegrationTest {
 
 
     public HttpResponse doHttpRequest(String apiName, String httpMethod, Object requestBody, String cookie) throws IOException, URISyntaxException {
+        context.setCookieStore(null);
+        context.setCookieSpecRegistry(null);
         HttpRequestBase requestBase;
         switch (httpMethod) {
             case "GET":

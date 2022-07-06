@@ -196,8 +196,6 @@ public class GoodsController {
         response.setStatus(HttpServletResponse.SC_CREATED);
 
         return Response.of(goodsService.createGoods(goods));
-
-
     }
 
     private void clean(Goods goods) {
@@ -258,14 +256,15 @@ public class GoodsController {
      *     }
      */
     /**
-     * @param response
-     * @param goods    goods to be updated
+     * @param id
+     * @param goods goods to be updated
      * @return 更新后的结果
      */
     // @formatter:on
-    public Response<Goods> updateGoods(Goods goods, HttpServletResponse response) {
+    @RequestMapping("/goods/{id}")
+    public Response<Goods> updateGoods(@PathVariable("id") long id, Goods goods) {
 
-        return Response.of(goodsService.updateGoods(goods));
+        return Response.of(goodsService.updateGoods(id, goods));
 
     }
 
@@ -317,9 +316,7 @@ public class GoodsController {
      */
     // @formatter:on
     @DeleteMapping("/goods/{id}")
-    public @ResponseBody
-    Response<Goods> deleteGoods(@PathVariable("id") Long goodsId, HttpServletResponse response) {
-
+    public Response<Goods> deleteGoods(@PathVariable("id") Long goodsId, HttpServletResponse response) {
         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         return Response.of(goodsService.deleteGoodsById(goodsId));
 

@@ -120,10 +120,10 @@ public class OrderController {
      * @param id
      * @return 订单
      */
-//    @GetMapping("/order/{id}")
-//    public Response<OrderResponse> getOrderById(@PathVariable("id") long id) {
-//        return Response.of(orderService.getOrderById(UserContext.getCurrentUser().getId(), id));
-//    }
+    @GetMapping("/order/{id}")
+    public Response<OrderResponse> getOrderById(@PathVariable("id") long id) {
+        return Response.of(orderService.getOrderById(UserContext.getCurrentUser().getId(), id));
+    }
 
 
     //@formatter:off

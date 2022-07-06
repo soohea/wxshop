@@ -16,8 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static com.soohea.wxshop.service.TelVerificationServiceTest.VALID_PARAMETER;
-import static com.soohea.wxshop.service.TelVerificationServiceTest.VALID_PARAMETER_CODE;
+import static com.soohea.wxshop.service.TelVerificationServiceTest.*;
 import static java.net.HttpURLConnection.*;
 
 @ExtendWith(SpringExtension.class)
@@ -48,6 +47,14 @@ public class AuthIntegrationTest extends AbstractIntegrationTest {
 
 
     @Test
+    public void returnForbiddenWhenCodeIsNotCorrect() throws Exception {
+        int responseCode = doHttpRequest("/api/v1/login",
+                "POST",
+                WRONG_CODE, null).code;
+        Assertions.assertEquals(HTTP_FORBIDDEN, responseCode);
+    }
+
+    @Test
     public void returnHttpOKWhenParameterIsCorrect() throws JsonProcessingException {
         int responseCode = HttpRequest.post(getUrl("/api/v1/code"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -66,17 +73,5 @@ public class AuthIntegrationTest extends AbstractIntegrationTest {
                 .code();
         Assertions.assertEquals(HTTP_BAD_REQUEST, responseCode);
     }
-
-    @Test
-    public void returnUnauthorizedIfNotLogin() {
-        int responseCode = HttpRequest.post(getUrl("/api/v1/any"))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .code();
-        Assertions.assertEquals(HTTP_UNAUTHORIZED, responseCode);
-    }
-
-
-
 
 }

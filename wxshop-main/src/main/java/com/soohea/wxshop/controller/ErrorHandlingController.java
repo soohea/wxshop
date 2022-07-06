@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
 public class ErrorHandlingController {
-
     @ExceptionHandler(HttpException.class)
     public @ResponseBody
     Response<?> onError(HttpServletResponse response, HttpException e) {

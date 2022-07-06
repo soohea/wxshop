@@ -8,6 +8,7 @@ import com.soohea.wxshop.generate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -52,17 +53,25 @@ public class GoodsService {
         }
     }
 
-    public Goods updateGoods(Goods goods) {
+    public Goods updateGoods(long id, Goods goods) {
         Shop shop = shopMapper.selectByPrimaryKey(goods.getShopId());
 
         if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
-            GoodsExample byId = new GoodsExample();
-            byId.createCriteria().andIdEqualTo(goods.getId());
-            int affectedRows = goodsMapper.updateByExample(goods, byId);
-            if (affectedRows == 0) {
-                throw HttpException.notFound("未找到！");
+            Goods goodsInDb = goodsMapper.selectByPrimaryKey(id);
+            if (goodsInDb == null) {
+                throw HttpException.notFound("未找到");
             }
-            return goods;
+            goodsInDb.setName(goods.getName());
+            goodsInDb.setDetails(goods.getDetails());
+            goodsInDb.setDescription(goods.getDescription());
+            goodsInDb.setImgUrl(goods.getImgUrl());
+            goodsInDb.setPrice(goods.getPrice());
+            goodsInDb.setStock(goods.getStock());
+            goodsInDb.setUpdatedAt(new Date());
+
+            goodsMapper.updateByPrimaryKey(goodsInDb);
+
+            return goodsInDb;
         } else {
             throw HttpException.forbidden("无权访问！");
         }

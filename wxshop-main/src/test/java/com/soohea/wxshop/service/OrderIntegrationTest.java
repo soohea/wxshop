@@ -14,6 +14,7 @@ import com.soohea.wxshop.entity.Response;
 import com.soohea.wxshop.generate.Goods;
 import com.soohea.wxshop.generate.Shop;
 import com.soohea.wxshop.mock.MockOrderRpcService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,11 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
             order.setId(1234L);
             return order;
         });
+    }
+
+    @AfterEach
+    public void clearUserContext() {
+        UserContext.setCurrentUser(null);
     }
 
     @Test
@@ -101,6 +107,7 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         HttpResponse response = doHttpRequest("/api/v1/order", "POST", orderInfo, loginResponse.cookie);
         Assertions.assertEquals(HttpStatus.GONE.value(), response.code);
 
+        //确保扣除库存成功回滚
         canCreateOrder();
 
     }
@@ -164,11 +171,15 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         orderUpdateRequest.setExpressCompany("顺丰");
         orderUpdateRequest.setExpressId("SF12345678");
 
+        RpcOrderGoods rpcOrderGoods = new RpcOrderGoods();
+
         Order orderInDB = new Order();
         orderInDB.setId(12345L);
         orderInDB.setShopId(2L);
 
-        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        rpcOrderGoods.setOrder(orderInDB);
+
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(rpcOrderGoods);
         when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
                 mockRpcOrderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.DELIVERED)
         );
@@ -191,24 +202,31 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
 
         Order orderUpdateRequest = new Order();
         orderUpdateRequest.setId(12345L);
-        orderUpdateRequest.setStatus(DataStatus.RECEIVED.getName());
+        orderUpdateRequest.setShopId(2L);
+        orderUpdateRequest.setExpressCompany("顺丰");
+        orderUpdateRequest.setExpressId("SF12345678");
+
+        RpcOrderGoods rpcOrderGoods = new RpcOrderGoods();
 
         Order orderInDB = new Order();
         orderInDB.setId(12345L);
-        orderInDB.setUserId(1L);
+        orderInDB.setShopId(2L);
 
-        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        rpcOrderGoods.setOrder(orderInDB);
+
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(rpcOrderGoods);
         when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
-                mockRpcOrderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.RECEIVED)
+                mockRpcOrderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.DELIVERED)
         );
 
         Response<OrderResponse> response = doHttpRequest("/api/v1/order/12345", "PATCH", orderUpdateRequest, loginResponse.cookie)
                 .assertOkStatusCode()
                 .asJsonObject(new TypeReference<Response<OrderResponse>>() {
                 });
+
         Assertions.assertEquals(2L, response.getData().getShop().getId());
         Assertions.assertEquals("shop2", response.getData().getShop().getName());
-        Assertions.assertEquals(DataStatus.RECEIVED.getName(), response.getData().getStatus());
+        Assertions.assertEquals(DataStatus.DELIVERED.getName(), response.getData().getStatus());
         Assertions.assertEquals(1, response.getData().getGoods().size());
         Assertions.assertEquals(3, response.getData().getGoods().get(0).getId());
         Assertions.assertEquals(10, response.getData().getGoods().get(0).getNumber());

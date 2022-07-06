@@ -126,11 +126,4 @@ public class GoodsServiceTest {
         assertEquals(mockData, result.getData());
     }
 
-    @Test
-    public void updateGoodsSucceed() {
-        when(shop.getOwnerUserId()).thenReturn(1L);
-        when(goodsMapper.updateByExample(any(), any())).thenReturn(1);
-        assertEquals(goods, goodsService.updateGoods(goods));
-
-    }
 }
