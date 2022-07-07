@@ -6,8 +6,13 @@ import com.soohea.api.data.OrderInfo;
 import com.soohea.api.data.PageResponse;
 import com.soohea.api.data.RpcOrderGoods;
 import com.soohea.api.exceptions.HttpException;
-import com.soohea.api.generate.*;
+import com.soohea.api.generate.Order;
+import com.soohea.api.generate.OrderExample;
+import com.soohea.api.generate.OrderGoods;
+import com.soohea.api.generate.OrderGoodsExample;
 import com.soohea.api.rpc.OrderRpcService;
+import com.soohea.order.generate.OrderGoodsMapper;
+import com.soohea.order.generate.OrderMapper;
 import com.soohea.order.mapper.MyOrderMapper;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +29,9 @@ import static java.util.stream.Collectors.toList;
 
 @Service(version = "${wxshop.orderservice.version}")
 public class RpcOrderServiceImpl implements OrderRpcService {
-    private OrderMapper orderMapper;
+    private com.soohea.order.generate.OrderMapper orderMapper;
     private MyOrderMapper myOrderMapper;
-    private OrderGoodsMapper orderGoodsMapper;
+    private com.soohea.order.generate.OrderGoodsMapper orderGoodsMapper;
 
     @Autowired
     public RpcOrderServiceImpl(OrderMapper orderMapper,

@@ -1,4 +1,4 @@
-package com.soohea.api.generate;
+package com.soohea.order.generate;
 
 import com.soohea.api.generate.OrderGoods;
 import com.soohea.api.generate.OrderGoodsExample;
