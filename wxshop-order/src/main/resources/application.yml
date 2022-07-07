@@ -2,7 +2,7 @@ spring:
   application:
     name: wxshop-order
   datasource:
-    url: jdbc:mysql://192.168.187.130:3306/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
     username: root
     password: my-secret-pw
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -23,6 +23,6 @@ dubbo:
   metadata-report:
       timeout: 10000
   registry:
-    address: zookeeper://192.168.187.130:2181
+    address: zookeeper://localhost:2181
   scan:
     base-packages: com.soohea.order.service

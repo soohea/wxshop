@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.187.130:3307/wxshop?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3307/wxshop?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
     username: root
     password: my-secret-pw
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -12,9 +12,6 @@ dubbo:
     timeout: 10000
   metadata-report:
       timeout: 10000
-  application:
-    name: orderservice
-    id: orderservice
   registry:
     address: N/A
   scan:
@@ -25,7 +22,7 @@ dubbo:
 
 wxshop:
   redis:
-    host: 192.168.187.130
+    host: localhost
     port: 6380
   orderservice:
     version: 0.0.1

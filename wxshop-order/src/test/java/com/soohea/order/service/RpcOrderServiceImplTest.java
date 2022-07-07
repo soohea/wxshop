@@ -30,7 +30,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class RpcOrderServiceImplTest {
-    String databaseUrl = "jdbc:mysql://192.168.187.130:3307/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8";
+    String databaseUrl = "jdbc:mysql://localhost:3307/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8";
     String databaseUsername = "root";
     String databasePassword = "my-secret-pw";
 

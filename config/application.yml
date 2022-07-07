@@ -2,7 +2,7 @@ spring:
   application:
     name: wxshop
   datasource:
-    url: jdbc:mysql://192.168.187.130:3306/wxshop?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/wxshop?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
     username: root
     password: my-secret-pw
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -11,7 +11,7 @@ mybatis:
 
 wxshop:
   redis:
-    host: 192.168.187.130
+    host: localhost
     port: 6379
 server:
   port:  8081

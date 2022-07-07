@@ -18,7 +18,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://192.168.187.130:3307/wxorder?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+                          value="jdbc:mysql://localhost:3307/wxorder?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
                 <property name="username" value="root"/>
                 <property name="password" value="my-secret-pw"/>
             </dataSource>
