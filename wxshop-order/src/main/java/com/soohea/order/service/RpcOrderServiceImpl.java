@@ -29,9 +29,9 @@ import static java.util.stream.Collectors.toList;
 
 @Service(version = "${wxshop.orderservice.version}")
 public class RpcOrderServiceImpl implements OrderRpcService {
-    private com.soohea.order.generate.OrderMapper orderMapper;
+    private OrderMapper orderMapper;
     private MyOrderMapper myOrderMapper;
-    private com.soohea.order.generate.OrderGoodsMapper orderGoodsMapper;
+    private OrderGoodsMapper orderGoodsMapper;
 
     @Autowired
     public RpcOrderServiceImpl(OrderMapper orderMapper,
