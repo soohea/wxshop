@@ -40,7 +40,6 @@ public class OrderService {
     private GoodsStockMapper goodsStockMapper;
     private GoodsService goodsService;
     private ShopMapper shopMapper;
-    private SqlSessionFactory sqlSessionFactory;
 
     @Autowired
     public OrderService(UserMapper userMapper, GoodsStockMapper goodsStockMapper, GoodsService goodsService, ShopMapper shopMapper, SqlSessionFactory sqlSessionFactory) {
@@ -48,7 +47,6 @@ public class OrderService {
         this.goodsStockMapper = goodsStockMapper;
         this.goodsService = goodsService;
         this.shopMapper = shopMapper;
-        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     public OrderResponse createOrder(OrderInfo orderInfo, Long userId) {

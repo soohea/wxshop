@@ -9,7 +9,7 @@
     - ZooKeeper: 作为Dubbo的注册中心
     - NGINX: 可选，如果希望实现多实例部署和负载均衡
 - 部署步骤
-    - `docker run -d -v /path/to/wxshop-data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wxshop --name=wxshop-mysql mysql`
+    - `sudo docker run -d -v /home/ubuntu/wxshop-data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wxshop --name=wxshop-mysql mysql --lower_case_table_names=1`
     - `docker run -p 6379:6379 -d redis`
     - `docker run -p 2181:2181 -d zookeeper`
     - 等待半分钟，等容器启动完毕
@@ -22,8 +22,8 @@
     - `./mvnw flyway:migrate -pl wxshop-order`
     - **注意，如果你使用的是Windows，将所有的./mvnw换成./mvnw.cmd**
 - 启动应用本身
-    - 在第一个窗口中运行 `java -jar wxshop-order/target/wxshop-order-0.0.1-SNAPSHOT.jar`
-    - 在第二个窗口中运行 `java -jar wxshop-main/target/wxshop-main-0.0.1-SNAPSHOT.jar`
+    - 在第一个窗口中运行 `java -jar -Dserver.port=8082 wxshop-order/target/wxshop-order-0.0.1-SNAPSHOT.jar`
+    - 在第二个窗口中运行 `java -jar -Dserver.port=8080 wxshop-main/target/wxshop-main-0.0.1-SNAPSHOT.jar`
 - open http://localhost:8080
 
 ### 数据库/Redis/ZooKeeper配置

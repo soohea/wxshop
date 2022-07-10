@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soohea.order.mapper.MyOrderMapper">
     <insert id="insertOrders" parameterType="OrderInfo">
-        insert into `ORDER_GOODS`(GOODS_ID,ORDER_ID,NUMBER)
+        insert into wxorder.ORDER_GOODS (GOODS_ID,ORDER_ID,NUMBER)
         values
         <foreach item="item" collection="goods"
                  separator=",">
@@ -12,11 +12,11 @@
     <select id="getGoodsInfoOfOrder" parameterType="long" resultType="GoodsInfo">
         select GOODS_ID as id,
                NUMBER   as number
-        from ORDER_GOODS
+        from wxorder.ORDER_GOODS
         where ORDER_ID = #{id}
     </select>
     <update id="updateById" parameterType="Order">
-        update 'ORDER_TABLE'
+        update wxorder.ORDER_TABLE
         set UPDATED_AT = now()
         <if test="expressCompany != null">
             ,
