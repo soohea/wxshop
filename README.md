@@ -24,6 +24,7 @@
 - 启动应用本身
     - 在第一个窗口中运行 `java -jar -Dserver.port=8082 wxshop-order/target/wxshop-order-0.0.1-SNAPSHOT.jar`
     - 在第二个窗口中运行 `java -jar -Dserver.port=8080 wxshop-main/target/wxshop-main-0.0.1-SNAPSHOT.jar`
+    - docker中打包运行 `sudo docker run -d -v `pwd`/application.yml:/app/application.yml -p 8081:8080 wxshop-main`
 - open http://localhost:8080
 
 ### 数据库/Redis/ZooKeeper配置
