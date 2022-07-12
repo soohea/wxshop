@@ -118,7 +118,7 @@ public class GoodsServiceTest {
 
         when(goodsMapper.countByExample(any())).thenReturn(100L);
         when(goodsMapper.selectByExample(any())).thenReturn(mockData);
-        PageResponse<Goods> result = goodsService.getGoods(pageNumber, pageSize, 456);
+        PageResponse<Goods> result = goodsService.getGoods(pageNumber, pageSize, 456L);
 
         assertEquals(10, result.getTotalPage());
         assertEquals(5, result.getPageNum());

@@ -41,8 +41,7 @@ public class GoodsService {
 
     public Goods createGoods(Goods goods) {
         Shop shop = shopMapper.selectByPrimaryKey(goods.getShopId());
-        System.out.println(UserContext.getCurrentUser().getId());
-        System.out.println(shop.getOwnerUserId());
+
         if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
             goods.setStatus(DataStatus.OK.getName());
             long id = goodsMapper.insert(goods);
@@ -94,7 +93,7 @@ public class GoodsService {
     }
 
 
-    public PageResponse<Goods> getGoods(Integer pageNum, Integer pageSize, Integer shopId) {
+    public PageResponse<Goods> getGoods(Integer pageNum, Integer pageSize, Long shopId) {
 
         int totalNumber = countGoods(shopId);
         int totalPage = (totalNumber + pageSize - 1) / pageSize;
@@ -106,16 +105,18 @@ public class GoodsService {
         return PageResponse.pagedData(pageNum, pageSize, totalPage, pagedGoods);
     }
 
-    private int countGoods(Integer shopId) {
-        GoodsExample goodsExample = new GoodsExample();
+    private int countGoods(Long shopId) {
         if (shopId == null) {
+            GoodsExample goodsExample = new GoodsExample();
             goodsExample.createCriteria().andStatusEqualTo(DataStatus.OK.getName());
+            return (int) goodsMapper.countByExample(goodsExample);
         } else {
+            GoodsExample goodsExample = new GoodsExample();
             goodsExample.createCriteria()
                     .andStatusEqualTo(DataStatus.OK.getName())
-                    .andShopIdEqualTo(shopId.longValue());
+                    .andShopIdEqualTo(shopId);
+            return (int) goodsMapper.countByExample(goodsExample);
         }
-        return (int) goodsMapper.countByExample(goodsExample);
     }
 
     public Goods getGoodsById(long goodsId) {
