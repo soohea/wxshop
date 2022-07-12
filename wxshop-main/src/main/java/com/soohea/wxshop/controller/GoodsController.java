@@ -128,10 +128,14 @@ public class GoodsController {
     /**
      * 根据id获取商品
      *
-     * @param shopId id
+     * @param goodsId id
      * @return 指定id的商品
      */
-
+    @GetMapping("/goods/{id}")
+    public @ResponseBody
+    Response<Goods> getGoodsById(@PathVariable("id") long goodsId) {
+        return Response.of(goodsService.getGoodsById(goodsId));
+    }
 
     // @formatter:off
     /**
@@ -261,8 +265,8 @@ public class GoodsController {
      * @return 更新后的结果
      */
     // @formatter:on
-    @RequestMapping("/goods/{id}")
-    public Response<Goods> updateGoods(@PathVariable("id") long id, Goods goods) {
+    @RequestMapping(value = "/goods/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
+    public Response<Goods> updateGoods(@PathVariable("id") long id, @RequestBody Goods goods) {
 
         return Response.of(goodsService.updateGoods(id, goods));
 

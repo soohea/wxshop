@@ -118,4 +118,15 @@ public class GoodsService {
         return (int) goodsMapper.countByExample(goodsExample);
     }
 
+    public Goods getGoodsById(long goodsId) {
+        GoodsExample okStatus = new GoodsExample();
+        okStatus.createCriteria().andIdEqualTo(goodsId)
+                .andStatusEqualTo(DataStatus.OK.name());
+        List<Goods> goods = goodsMapper.selectByExampleWithBLOBs(okStatus);
+        if (goods.isEmpty()) {
+            throw HttpException.notFound("商品未找到：" + goodsId);
+        }
+        return goods.get(0);
+    }
+
 }

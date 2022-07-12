@@ -30,7 +30,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class RpcOrderServiceImplTest {
-    String databaseUrl = "jdbc:mysql://localhost:3307/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8";
+    String databaseUrl = "jdbc:mysql://192.168.187.130:3307/wxorder?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8";
     String databaseUsername = "root";
     String databasePassword = "my-secret-pw";
 
@@ -89,6 +89,13 @@ public class RpcOrderServiceImplTest {
         Assertions.assertEquals("火星", orderInDB.getOrder().getAddress());
         Assertions.assertEquals(10000L, orderInDB.getOrder().getTotalPrice());
         Assertions.assertEquals(DataStatus.PENDING.getName(), orderInDB.getOrder().getStatus());
+    }
+
+    @Test
+    public void canGetEmptyOrderList() {
+        PageResponse<RpcOrderGoods> result = rpcOrderService.getOrder(8888L, 2, 1, null);
+        Assertions.assertEquals(0, result.getData().size());
+        Assertions.assertEquals(0, result.getTotalPage());
     }
 
     @Test
@@ -167,7 +174,7 @@ public class RpcOrderServiceImplTest {
         HttpException exception = Assertions.assertThrows(HttpException.class, () ->
                 rpcOrderService.deleteOrder(2L, 0L));
 
-        Assertions.assertEquals(HttpURLConnection.HTTP_FORBIDDEN,exception.getStatusCode());
+        Assertions.assertEquals(HttpURLConnection.HTTP_FORBIDDEN, exception.getStatusCode());
     }
 
 }

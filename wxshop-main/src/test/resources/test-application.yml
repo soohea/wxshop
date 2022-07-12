@@ -12,6 +12,9 @@ dubbo:
     timeout: 10000
   metadata-report:
       timeout: 10000
+  application:
+    name: orderservice
+    id: orderservice
   registry:
     address: N/A
   scan:
@@ -26,5 +29,5 @@ wxshop:
     port: 6380
   orderservice:
     version: 0.0.1
-    url: dubbo://127.0.0.1:12345
+    url: localhost://127.0.0.1:12345
 #zookeeper://192.168.187.130:2181
