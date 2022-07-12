@@ -21,22 +21,17 @@ public class GoodsService {
     private GoodsMapper goodsMapper;
     private ShopMapper shopMapper;
 
-    public Map<Long, Goods> getIdToGoodsMap(List<Long> goodsId) {
-        GoodsExample example = new GoodsExample();
-        example.createCriteria().andIdIn(goodsId);
-        List<Goods> goods = goodsMapper.selectByExample(example);
-
-        if (goods.stream().map(Goods::getShopId).collect(toSet()).size() != 1) {
-            throw HttpException.badRequest("商品ID非法！");
-        }
-        return goods.stream().collect(toMap(Goods::getId, x -> x));
-
-    }
-
     @Autowired
     public GoodsService(GoodsMapper goodsMapper, ShopMapper shopMapper) {
         this.goodsMapper = goodsMapper;
         this.shopMapper = shopMapper;
+    }
+
+    public Map<Long, Goods> getIdToGoodsMap(List<Long> goodsId) {
+        GoodsExample example = new GoodsExample();
+        example.createCriteria().andIdIn(goodsId);
+        List<Goods> goods = goodsMapper.selectByExample(example);
+        return goods.stream().collect(toMap(Goods::getId, x -> x));
     }
 
     public Goods createGoods(Goods goods) {
